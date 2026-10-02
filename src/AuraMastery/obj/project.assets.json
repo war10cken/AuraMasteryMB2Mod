@@ -1,7 +1,7 @@
 {
-  "version": 4,
+  "version": 3,
   "targets": {
-    "net472": {
+    ".NETFramework,Version=v4.7.2": {
       "Lib.Harmony/2.3.3": {
         "type": "package",
         "compile": {
@@ -468,25 +468,25 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net472": [
+    ".NETFramework,Version=v4.7.2": [
       "Lib.Harmony >= 2.3.3",
       "Microsoft.NETFramework.ReferenceAssemblies >= 1.0.3"
     ]
   },
   "packageFolders": {
-    "/root/.nuget/packages/": {}
+    "C:\\Users\\garha\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/workspace/src/AuraMastery/AuraMastery.csproj",
+      "projectUniqueName": "D:\\MB2 Mods\\AuraMastery\\src\\AuraMastery\\AuraMastery.csproj",
       "projectName": "AuraMastery",
-      "projectPath": "/workspace/src/AuraMastery/AuraMastery.csproj",
-      "packagesPath": "/root/.nuget/packages/",
-      "outputPath": "/workspace/src/AuraMastery/obj/",
+      "projectPath": "D:\\MB2 Mods\\AuraMastery\\src\\AuraMastery\\AuraMastery.csproj",
+      "packagesPath": "C:\\Users\\garha\\.nuget\\packages\\",
+      "outputPath": "D:\\MB2 Mods\\AuraMastery\\src\\AuraMastery\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/root/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\garha\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net472"
@@ -496,7 +496,6 @@
       },
       "frameworks": {
         "net472": {
-          "framework": "net472",
           "targetAlias": "net472",
           "projectReferences": {}
         }
@@ -510,12 +509,10 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "10.0.400"
+      }
     },
     "frameworks": {
       "net472": {
-        "framework": "net472",
         "targetAlias": "net472",
         "dependencies": {
           "Lib.Harmony": {
@@ -528,7 +525,7 @@
             "version": "[1.0.3, )"
           }
         },
-        "runtimeIdentifierGraphPath": "/root/.dotnet/sdk/10.0.401/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303\\RuntimeIdentifierGraph.json"
       }
     }
   }
