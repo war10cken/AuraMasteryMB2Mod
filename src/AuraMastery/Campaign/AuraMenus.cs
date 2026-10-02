@@ -15,7 +15,7 @@ namespace AuraMastery.CampaignBehaviors
         private const string AuraMenuId = "aura_menu";
 
         // Cooldown storage to prevent infinite book farming from the settlement menu.
-        // Key: technique id, value: last purchase time (CampaignTime.Now.Value, measured in hours).
+        // Key: technique id, value: last purchase time (CampaignTime.Now.Value64, measured in hours).
         private static readonly System.Collections.Generic.Dictionary<string, double> _lastBookGivenHours =
             new System.Collections.Generic.Dictionary<string, double>();
 
@@ -102,8 +102,11 @@ namespace AuraMastery.CampaignBehaviors
                     // Local copy for stable closure capture.
                     AuraTechniqueDefinition techLocal = technique;
 
+                    // TextObject has no operator+ in TaleWorlds.Localization; build the
+                    // display name as a single TextObject with an inline value token.
                     starter.AddGameMenuOption(menuId, optionId,
-                        new TextObject("{=auraTownGiveBook}Buy Tome: ") + new TextObject(techLocal.Name),
+                        new TextObject("{=auraTownGiveBook}Buy Tome: {TECHNAME}")
+                            .SetText("TECHNAME", techLocal.Name),
                         args =>
                         {
                             // Submenu leave-type keeps the player inside the settlement menu context.
@@ -141,7 +144,7 @@ namespace AuraMastery.CampaignBehaviors
             // CampaignTime.Value is measured in hours (1 day = 24 hours), so the elapsed
             // time is converted to days before comparing with the cooldown.
             double lastGivenHours = _lastBookGivenHours.TryGetValue(technique.Id, out double t) ? t : 0.0;
-            double elapsedDays = (CampaignTime.Now.Value - lastGivenHours) / 24.0;
+            double elapsedDays = (CampaignTime.Now.Value64 - lastGivenHours) / 24.0;
             return elapsedDays >= BookGiveCooldownDays;
         }
 
@@ -165,8 +168,8 @@ namespace AuraMastery.CampaignBehaviors
 
             Hero.MainHero.ChangeHeroGold(-price);
             behavior.GiveBook(technique.BookItemId);
-            // Store the purchase moment (CampaignTime.Now.Value, in hours).
-            _lastBookGivenHours[technique.Id] = CampaignTime.Now.Value;
+            // Store the purchase moment (CampaignTime.Now.Value64, in hours).
+            _lastBookGivenHours[technique.Id] = CampaignTime.Now.Value64;
             InformationManager.DisplayMessage(new InformationMessage(
                 $"Purchased '{technique.Name}' tome for {price} gold"));
         }
