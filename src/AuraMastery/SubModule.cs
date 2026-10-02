@@ -23,6 +23,8 @@ namespace AuraMastery
             {
                 _harmony = new Harmony(HarmonyId);
                 PatchMissionInjection();
+                // Патч MapScreen ищем рефлексивно (тип переезжал между namespace'ами в 1.x)
+                Patches.MapScreenPatches.Apply(_harmony);
                 // НЕ вызываем PatchAll — патчим только то, что нужно
                 AuraLogger.Log("SubModule.OnSubModuleLoad SUCCESS");
             }
