@@ -1,0 +1,82 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+
+    <AssemblyName>AuraMastery</AssemblyName>
+    <RootNamespace>AuraMastery</RootNamespace>
+
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+
+    <ModuleName>AuraMastery</ModuleName>
+
+    <!--
+      Твой путь к игре.
+      Символ & в XML должен быть записан как &amp;
+    -->
+    <BannerlordPath>D:/Steam/steamapps/common/Mount &amp; Blade II Bannerlord</BannerlordPath>
+
+    <!--
+      Собираем DLL сразу в папку мода.
+      Если вдруг снова будет Access denied, скажи — вернем локальный build.
+    -->
+    <OutputPath>$(BannerlordPath)/Modules/$(ModuleName)/bin/Win64_Shipping_Client</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="All"/>
+    <PackageReference Include="Lib.Harmony" Version="2.3.3"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="TaleWorlds.Core">
+      <HintPath>$(BannerlordPath)/bin/Win64_Shipping_Client/TaleWorlds.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="TaleWorlds.Library">
+      <HintPath>$(BannerlordPath)/bin/Win64_Shipping_Client/TaleWorlds.Library.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="TaleWorlds.Engine">
+      <HintPath>$(BannerlordPath)/bin/Win64_Shipping_Client/TaleWorlds.Engine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="TaleWorlds.InputSystem">
+      <HintPath>$(BannerlordPath)/bin/Win64_Shipping_Client/TaleWorlds.InputSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="TaleWorlds.ObjectSystem">
+      <HintPath>$(BannerlordPath)/bin/Win64_Shipping_Client/TaleWorlds.ObjectSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="TaleWorlds.SaveSystem">
+      <HintPath>$(BannerlordPath)/bin/Win64_Shipping_Client/TaleWorlds.SaveSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="TaleWorlds.MountAndBlade">
+      <HintPath>$(BannerlordPath)/bin/Win64_Shipping_Client/TaleWorlds.MountAndBlade.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="TaleWorlds.CampaignSystem">
+      <HintPath>$(BannerlordPath)/bin/Win64_Shipping_Client/TaleWorlds.CampaignSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="TaleWorlds.DotNet">
+      <HintPath>$(BannerlordPath)/bin/Win64_Shipping_Client/TaleWorlds.DotNet.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>

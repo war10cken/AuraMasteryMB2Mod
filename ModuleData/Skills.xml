@@ -1,0 +1,10 @@
+<Skills>
+    <Skill id="AuraMastery"
+           name="Aura Mastery"
+           description="Mastery over aura energy. Increased by using aura techniques in battle."
+           type="Personal"
+           attribute="Endurance"
+           primaryRole="Fighter"
+           maxLevel="1024">
+    </Skill>
+</Skills>

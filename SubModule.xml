@@ -1,0 +1,48 @@
+<Module>
+    <Name value="Aura Mastery"/>
+    <Id value="AuraMastery"/>
+    <Version value="v1.0.0"/>
+    <SingleplayerModule value="true"/>
+    <MultiplayerModule value="false"/>
+    <Official value="false"/>
+
+    <DependedModules>
+        <DependedModule Id="Native"/>
+        <DependedModule Id="SandBoxCore"/>
+        <DependedModule Id="Sandbox"/>
+    </DependedModules>
+
+    <SubModules>
+        <SubModule>
+            <Name value="AuraMastery"/>
+            <DLLName value="AuraMastery.dll"/>
+            <SubModuleClassType value="AuraMastery.SubModule"/>
+            <Tags>
+                <Tag key="DedicatedServerType" value="none"/>
+                <Tag key="IsNoRenderModeElement" value="false"/>
+            </Tags>
+        </SubModule>
+    </SubModules>
+
+    <Xmls>
+        <XmlNode>
+            <XmlName id="Items" path="Items"/>
+            <IncludedGameTypes>
+                <GameType value="Campaign"/>
+                <GameType value="CampaignStoryMode"/>
+            </IncludedGameTypes>
+        </XmlNode>
+
+        <!--
+            Если игра ругается на Skills.xml, убери этот XmlNode.
+            Внутренний прогресс ауры все равно будет работать без нативного навыка.
+        -->
+        <XmlNode>
+            <XmlName id="Skills" path="Skills"/>
+            <IncludedGameTypes>
+                <GameType value="Campaign"/>
+                <GameType value="CampaignStoryMode"/>
+            </IncludedGameTypes>
+        </XmlNode>
+    </Xmls>
+</Module>

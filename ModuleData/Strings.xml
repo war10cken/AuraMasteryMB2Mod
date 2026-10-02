@@ -1,0 +1,11 @@
+<base>
+    <tags>
+        <tag language="English"/>
+    </tags>
+    <strings>
+        <string id="AuraMenuTitle" text="Aura Techniques"/>
+        <string id="AuraOpenMenu" text="Aura"/>
+        <string id="AuraBack" text="Back"/>
+        <string id="AuraDebugGiveBook" text="Debug: Give Aura Wave Book"/>
+    </strings>
+</base>
