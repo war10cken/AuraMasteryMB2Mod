@@ -1,20 +1,10 @@
-D:/MB2 Mods/AuraMastery/src/AuraMastery/obj/Release/AuraMastery.csproj.AssemblyReference.cache
-D:/MB2 Mods/AuraMastery/src/AuraMastery/obj/Release/AuraMastery.GeneratedMSBuildEditorConfig.editorconfig
-D:/MB2 Mods/AuraMastery/src/AuraMastery/obj/Release/AuraMastery.AssemblyInfoInputs.cache
-D:/MB2 Mods/AuraMastery/src/AuraMastery/obj/Release/AuraMastery.AssemblyInfo.cs
-D:/MB2 Mods/AuraMastery/src/AuraMastery/obj/Release/AuraMastery.csproj.CoreCompileInputs.cache
-D:/Steam/steamapps/common/Mount & Blade II Bannerlord/Modules/AuraMastery/bin/Win64_Shipping_Client/AuraMastery.dll
-D:/Steam/steamapps/common/Mount & Blade II Bannerlord/Modules/AuraMastery/bin/Win64_Shipping_Client/AuraMastery.pdb
-D:/MB2 Mods/AuraMastery/src/AuraMastery/obj/Release/AuraMast.22C7089B.Up2Date
-D:/MB2 Mods/AuraMastery/src/AuraMastery/obj/Release/AuraMastery.dll
-D:/MB2 Mods/AuraMastery/src/AuraMastery/obj/Release/AuraMastery.pdb
-/workspace/src/AuraMastery/obj/Release/AuraMastery.csproj.AssemblyReference.cache
-/workspace/src/AuraMastery/obj/Release/AuraMastery.GeneratedMSBuildEditorConfig.editorconfig
-/workspace/src/AuraMastery/obj/Release/AuraMastery.AssemblyInfoInputs.cache
-/workspace/src/AuraMastery/obj/Release/AuraMastery.AssemblyInfo.cs
-/workspace/src/AuraMastery/obj/Release/AuraMastery.csproj.CoreCompileInputs.cache
-/workspace/src/AuraMastery/obj/Release/AuraMastery.dll
-/workspace/src/AuraMastery/obj/Release/AuraMastery.pdb
-/tmp/out/AuraMastery.dll
-/tmp/out/AuraMastery.pdb
-/workspace/src/AuraMastery/obj/Release/AuraMast.22C7089B.Up2Date
+D:\MB2 Mods\AuraMastery\src\AuraMastery\obj\Release\AuraMastery.csproj.AssemblyReference.cache
+D:\MB2 Mods\AuraMastery\src\AuraMastery\obj\Release\AuraMastery.GeneratedMSBuildEditorConfig.editorconfig
+D:\MB2 Mods\AuraMastery\src\AuraMastery\obj\Release\AuraMastery.AssemblyInfoInputs.cache
+D:\MB2 Mods\AuraMastery\src\AuraMastery\obj\Release\AuraMastery.AssemblyInfo.cs
+D:\MB2 Mods\AuraMastery\src\AuraMastery\obj\Release\AuraMastery.csproj.CoreCompileInputs.cache
+D:\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\AuraMastery\bin\Win64_Shipping_Client\AuraMastery.dll
+D:\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\AuraMastery\bin\Win64_Shipping_Client\AuraMastery.pdb
+D:\MB2 Mods\AuraMastery\src\AuraMastery\obj\Release\AuraMast.22C7089B.Up2Date
+D:\MB2 Mods\AuraMastery\src\AuraMastery\obj\Release\AuraMastery.dll
+D:\MB2 Mods\AuraMastery\src\AuraMastery\obj\Release\AuraMastery.pdb
