@@ -7,5 +7,6 @@
         <string id="AuraOpenMenu" text="Aura"/>
         <string id="AuraBack" text="Back"/>
         <string id="AuraDebugGiveBook" text="Debug: Give Aura Wave Book"/>
+        <string id="auraTownGiveBook" text="Buy Tome: "/>
     </strings>
 </base>

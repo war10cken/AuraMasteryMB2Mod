@@ -3,6 +3,7 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.GameMenus;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
 using AuraMastery.Core;
 using AuraMastery.Techniques;
 
@@ -11,6 +12,14 @@ namespace AuraMastery.CampaignBehaviors
     public static class AuraMenus
     {
         private const string AuraMenuId = "aura_menu";
+
+        // Cooldown storage to prevent infinite book farming from the settlement menu.
+        // Key: technique id, value: last time the book was given (CampaignTime.Value).
+        private static readonly System.Collections.Generic.Dictionary<string, float> _lastBookGivenDays =
+            new System.Collections.Generic.Dictionary<string, float>();
+
+        // Books are not available during the first in-game year after session start.
+        private const float BookGiveCooldownDays = 365f;
 
         public static void Register(CampaignGameStarter starter)
         {
@@ -46,10 +55,12 @@ namespace AuraMastery.CampaignBehaviors
                     args => true,
                     args => OnGiveDebugBookConsequence(AuraTechniqueDefinition.WaveStrike.BookItemId), false);
 
-                // Назад
+                // Back
                 starter.AddGameMenuOption(AuraMenuId, "aura_back", "Back",
                     args => true,
                     args => GoToMenu("game_menu"), true);
+
+                RegisterSettlementMenuOptions(starter);
 
                 AuraLogger.Log("AuraMenus.Register: done");
             }
@@ -58,6 +69,96 @@ namespace AuraMastery.CampaignBehaviors
                 AuraLogger.Log($"AuraMenus.Register ERROR: {ex}");
             }
         }
+
+        #region Settlement menu options
+
+        // Adds a line to the settlement menus ("town" and "castle") that gives
+        // the player an aura tome, following the same AddGameMenuOption pattern
+        // as the ArtisanBeer mod (see its AddWorkshopButton method).
+        private static void RegisterSettlementMenuOptions(CampaignGameStarter starter)
+        {
+            foreach (string menuId in new[] { "town", "castle" })
+            {
+                int index = 0;
+                foreach (AuraTechniqueDefinition technique in AuraTechniqueDefinition.All)
+                {
+                    string optionId = $"aura_give_book_{technique.Id}";
+                    var bookName = new TextObject(technique.Name);
+
+                    // One-time init of the cooldown timer so books are not free on day one.
+                    if (!_lastBookGivenDays.ContainsKey(technique.Id))
+                    {
+                        _lastBookGivenDays[technique.Id] = 0f;
+                    }
+
+                    starter.AddGameMenuOption(menuId, optionId, new TextObject("{=auraTownGiveBook}Buy Tome: ") + bookName,
+                        args =>
+                        {
+                            // LeaveType.Continue keeps the player inside the settlement menu.
+                            return CanGiveBookFromSettlement(technique);
+                        },
+                        args => OnGiveBookFromSettlementConsequence(technique),
+                        showIfCantChoose: false,
+                        positionInParent: 9 + index,
+                        isSubmenu: false);
+
+                    index++;
+                }
+            }
+        }
+
+        private static bool CanGiveBookFromSettlement(AuraTechniqueDefinition technique)
+        {
+            Settlement settlement = Settlement.CurrentSettlement;
+            if (settlement == null || technique == null)
+            {
+                return false;
+            }
+
+            // Books are only sold in towns and castles with markets.
+            if (!(settlement.IsTown || settlement.IsCastle))
+            {
+                return false;
+            }
+
+            // Do not offer a book for an already known technique.
+            if (GetBehavior()?.HasTechnique(Hero.MainHero, technique.Id) == true)
+            {
+                return false;
+            }
+
+            // Cooldown: one copy per technique per BookGiveCooldownDays game days.
+            float lastGiven = _lastBookGivenDays.TryGetValue(technique.Id, out float d) ? d : 0f;
+            return CampaignTime.Now.Value - lastGiven >= BookGiveCooldownDays;
+        }
+
+        private static void OnGiveBookFromSettlementConsequence(AuraTechniqueDefinition technique)
+        {
+            AuraLogger.Log($"Settlement book consequence called for {technique.Id}");
+
+            var behavior = GetBehavior();
+            if (behavior == null || Hero.MainHero == null)
+            {
+                return;
+            }
+
+            int price = technique.RequiredAuraLevel * 1500;
+            if (Hero.MainHero.Gold < price)
+            {
+                InformationManager.DisplayMessage(new InformationMessage(
+                    $"Not enough gold: the tome costs {price}"));
+                return;
+            }
+
+            Hero.MainHero.ChangeHeroGold(-price);
+            behavior.GiveBook(technique.BookItemId);
+            _lastBookGivenDays[technique.Id] = CampaignTime.Now.Value;
+
+            InformationManager.DisplayMessage(new InformationMessage(
+                $"Purchased '{technique.Name}' tome for {price} gold"));
+        }
+
+        #endregion
 
         private static AuraCampaignBehavior GetBehavior()
         {
