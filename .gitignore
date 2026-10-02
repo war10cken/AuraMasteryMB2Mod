@@ -1,1 +1,95 @@
-(empty)
+# ==========================================
+# .gitignore для C#-мода
+# ==========================================
+
+# ---------- Результаты сборки ----------
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Ll]og/
+[Ll]ogs/
+publish/
+Publish/
+
+# ---------- Временные и скомпилированные файлы ----------
+*.pdb
+*.ilk
+*.exp
+*.cache
+*.tmp
+*.temp
+*.obj
+*.o
+*.a
+*.so
+*.dylib
+*.lib
+*.idb
+*.aps
+
+# ---------- Пользовательские файлы Visual Studio / Rider ----------
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.rsuser
+*.sln.docstates
+
+# ---------- IDE / редакторы ----------
+.vs/
+.vscode/
+.idea/
+_ReSharper*/
+*.DotSettings.user
+*.swp
+*.swo
+*~
+
+# ---------- NuGet / пакеты ----------
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+!**/packages/build/
+project.assets.json
+project.lock.json
+
+# ---------- Локальные зависимости / DLL игры ----------
+# Если у тебя есть папка с DLL игры или ссылками, которые не надо коммитить,
+# раскомментируй и при необходимости поправь названия папок:
+# Libs/
+# References/
+# GameReferences/
+
+# ---------- Артефакты сборки мода ----------
+# Раскомментируй нужное, если не хочешь хранить скомпилированный мод в репозитории.
+# ВНИМАНИЕ: *.dll или *.exe будет игнорировать все такие файлы, включая библиотеки.
+# Используй это осторожно.
+
+# Assemblies/
+# Output/
+# *.dll
+# *.exe
+
+# Для конкретных игр/загрузчиков:
+# *.tmod        # tModLoader / Terraria
+# *.mod
+# *.zip
+# *.rar
+# *.7z
+
+# ---------- Служебные файлы ОС ----------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
