@@ -15,12 +15,15 @@ namespace AuraMastery.CampaignBehaviors
         private const string AuraMenuId = "aura_menu";
 
         // Cooldown storage to prevent infinite book farming from the settlement menu.
-        // Key: technique id, value: last purchase time (CampaignTime.Now.Value64, measured in hours).
-        private static readonly System.Collections.Generic.Dictionary<string, double> _lastBookGivenHours =
-            new System.Collections.Generic.Dictionary<string, double>();
+        // Key: technique id, value: last purchase time as elapsed game days since campaign start.
+        // Verified against TaleWorlds.CampaignSystem.dll metadata (1.3.15): CampaignTime has no
+        // "Value"/"Value64" members; ElapsedDaysUntilNow is an INSTANCE property (float), so it
+        // must be read via CampaignTime.Now.ElapsedDaysUntilNow.
+        private static readonly System.Collections.Generic.Dictionary<string, float> _lastBookGivenDays =
+            new System.Collections.Generic.Dictionary<string, float>();
 
         // Books are not available during the first in-game year after session start.
-        private const double BookGiveCooldownDays = 365.0;
+        private const float BookGiveCooldownDays = 365f;
 
         public static void Register(CampaignGameStarter starter)
         {
@@ -94,19 +97,22 @@ namespace AuraMastery.CampaignBehaviors
                     string optionId = $"aura_give_book_{technique.Id}_{menuId}_{optionIndex++}";
 
                     // One-time init of the cooldown timer so books are not free on day one.
-                    if (!_lastBookGivenHours.ContainsKey(technique.Id))
+                    if (!_lastBookGivenDays.ContainsKey(technique.Id))
                     {
-                        _lastBookGivenHours[technique.Id] = 0.0;
+                        _lastBookGivenDays[technique.Id] = 0f;
                     }
 
                     // Local copy for stable closure capture.
                     AuraTechniqueDefinition techLocal = technique;
 
-                    // TextObject has no operator+ in TaleWorlds.Localization; build the
-                    // display name as a single TextObject with an inline value token.
+                    // TextObject has no operator+ (only op_Equality/op_Inequality exist,
+                    // verified against TaleWorlds.Localization.dll metadata). Build the option
+                    // label by mutating a single TextObject via SetTextVariable("TAG", value)
+                    // and referencing the {TAG} token inside the localized string.
+                    // AddGameMenuOption takes optionText as String (verified signature), so the
+                    // finished TextObject is rendered with ToString().
                     starter.AddGameMenuOption(menuId, optionId,
-                        new TextObject("{=auraTownGiveBook}Buy Tome: {TECHNAME}")
-                            .SetText("TECHNAME", techLocal.Name),
+                        GetBuyTomeText(techLocal).ToString(),
                         args =>
                         {
                             // Submenu leave-type keeps the player inside the settlement menu context.
@@ -114,11 +120,25 @@ namespace AuraMastery.CampaignBehaviors
                             return CanGiveBookFromSettlement(Settlement.CurrentSettlement, techLocal);
                         },
                         args => OnGiveBookFromSettlementConsequence(Settlement.CurrentSettlement, techLocal),
-                        showIfCantChoose: false,
-                        disabled: false,
-                        sortPriority: 9);
+                        isLeave: false);
                 }
             }
+        }
+
+        // Cached TextObject per technique for the settlement menu option label.
+        // SetTextVariable returns void, so the object is prepared once and reused.
+        private static readonly System.Collections.Generic.Dictionary<string, TextObject> _buyTomeTexts =
+            new System.Collections.Generic.Dictionary<string, TextObject>();
+
+        private static TextObject GetBuyTomeText(AuraTechniqueDefinition technique)
+        {
+            if (!_buyTomeTexts.TryGetValue(technique.Id, out TextObject text))
+            {
+                text = new TextObject("{=auraTownGiveBook}Buy Tome: {TECHNAME}");
+                text.SetTextVariable("TECHNAME", technique.Name);
+                _buyTomeTexts[technique.Id] = text;
+            }
+            return text;
         }
 
         private static bool CanGiveBookFromSettlement(Settlement settlement, AuraTechniqueDefinition technique)
@@ -141,10 +161,11 @@ namespace AuraMastery.CampaignBehaviors
             }
 
             // Cooldown: one copy per technique per BookGiveCooldownDays game days.
-            // CampaignTime.Value is measured in hours (1 day = 24 hours), so the elapsed
-            // time is converted to days before comparing with the cooldown.
-            double lastGivenHours = _lastBookGivenHours.TryGetValue(technique.Id, out double t) ? t : 0.0;
-            double elapsedDays = (CampaignTime.Now.Value64 - lastGivenHours) / 24.0;
+            // ElapsedDaysUntilNow is an instance property on CampaignTime (verified in metadata),
+            // read through the static CampaignTime.Now snapshot; value is elapsed game days
+            // since campaign start.
+            float lastGivenDays = _lastBookGivenDays.TryGetValue(technique.Id, out float t) ? t : 0f;
+            float elapsedDays = CampaignTime.Now.ElapsedDaysUntilNow - lastGivenDays;
             return elapsedDays >= BookGiveCooldownDays;
         }
 
@@ -168,8 +189,8 @@ namespace AuraMastery.CampaignBehaviors
 
             Hero.MainHero.ChangeHeroGold(-price);
             behavior.GiveBook(technique.BookItemId);
-            // Store the purchase moment (CampaignTime.Now.Value64, in hours).
-            _lastBookGivenHours[technique.Id] = CampaignTime.Now.Value64;
+            // Store the purchase moment as elapsed game days since campaign start.
+            _lastBookGivenDays[technique.Id] = CampaignTime.Now.ElapsedDaysUntilNow;
             InformationManager.DisplayMessage(new InformationMessage(
                 $"Purchased '{technique.Name}' tome for {price} gold"));
         }
