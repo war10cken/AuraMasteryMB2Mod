@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\MB2 Mods\\AuraMastery\\src\\AuraMastery\\AuraMastery.csproj": {}
+    "/workspace/src/AuraMastery/AuraMastery.csproj": {}
   },
   "projects": {
-    "D:\\MB2 Mods\\AuraMastery\\src\\AuraMastery\\AuraMastery.csproj": {
+    "/workspace/src/AuraMastery/AuraMastery.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MB2 Mods\\AuraMastery\\src\\AuraMastery\\AuraMastery.csproj",
+        "projectUniqueName": "/workspace/src/AuraMastery/AuraMastery.csproj",
         "projectName": "AuraMastery",
-        "projectPath": "D:\\MB2 Mods\\AuraMastery\\src\\AuraMastery\\AuraMastery.csproj",
-        "packagesPath": "C:\\Users\\garha\\.nuget\\packages\\",
-        "outputPath": "D:\\MB2 Mods\\AuraMastery\\src\\AuraMastery\\obj\\",
+        "projectPath": "/workspace/src/AuraMastery/AuraMastery.csproj",
+        "packagesPath": "/root/.nuget/packages/",
+        "outputPath": "/workspace/src/AuraMastery/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\garha\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/root/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net472"
@@ -24,6 +24,7 @@
         },
         "frameworks": {
           "net472": {
+            "framework": "net472",
             "targetAlias": "net472",
             "projectReferences": {}
           }
@@ -37,10 +38,12 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net472": {
+          "framework": "net472",
           "targetAlias": "net472",
           "dependencies": {
             "Lib.Harmony": {
@@ -53,7 +56,7 @@
               "version": "[1.0.3, )"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/root/.dotnet/sdk/10.0.401/RuntimeIdentifierGraph.json"
         }
       }
     }
